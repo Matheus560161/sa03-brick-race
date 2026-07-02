@@ -8,7 +8,7 @@ class Jogo
     static int nivel;
     static int velocidade;
 
-    // 0 = esquerda | 1 = direita
+    
     static int pistaJogador;
 
     static Random random = new Random();
@@ -50,7 +50,32 @@ class Jogo
                 }
             }
 
-            Thread.Sleep(velocidade);
+                        while (jogando)
+{
+                        DesenharTela();
+
+                        if (Console.KeyAvailable)
+    {
+                     ConsoleKey tecla = Console.ReadKey(true).Key;
+
+                    switch (tecla)
+                       {
+                    case ConsoleKey.A:
+                    case ConsoleKey.LeftArrow:
+                    pistaJogador = 0;
+                    break;
+
+            case ConsoleKey.D:
+            case ConsoleKey.RightArrow:
+                pistaJogador = 1;
+                break;
+
+            case ConsoleKey.Escape:
+                jogando = false;
+                break;
+        }
+    }
+}
         }
     }
 
@@ -64,25 +89,25 @@ class Jogo
         Console.WriteLine("║ PISTA                        ║ PAINEL                                    ║");
         Console.WriteLine("║ ┌──────────┬──────────┐      ║ Pontos : " + pontos.ToString("000000") + "                           ║");
         Console.WriteLine("║ │          │          │      ║ Nível  : " + nivel.ToString("00") + "                               ║");
-        Console.WriteLine("║ │          │          │      ║ Vidas  : " + vidas + "                                     ║");
-        Console.WriteLine("║ │          │          │      ║ Veloc. : " + velocidade + " ms                                      ║");
-        Console.WriteLine("║ │          │          │      ║                                       ║");
-        Console.WriteLine("║ │          │          │      ║ CONTROLES                                    ║");
-        Console.WriteLine("║ │          │          │      ║ A ou ← = Esquerda                                    ║");
+        Console.WriteLine("║ │          │          │      ║ Vidas  : " + vidas + "                                ║");
+        Console.WriteLine("║ │          │          │      ║ Veloc. : " + velocidade + " ms                           ║");
+        Console.WriteLine("║ │          │          │      ║                                           ║");
+        Console.WriteLine("║ │          │          │      ║ CONTROLES                                 ║");
+        Console.WriteLine("║ │          │          │      ║ A ou ← = Esquerda                         ║");
         Console.WriteLine("║ │          │          │      ║ D ou → = Direita                          ║");
         Console.WriteLine("║ │          │          │      ║ ESC = Sair                                ║");
 
         if (pistaJogador == 0)
         {
-            Console.WriteLine("║ │   █      │          │      ║                                       ║");
-            Console.WriteLine("║ │  ███     │          │      ║                                       ║");
-            Console.WriteLine("║ │  █ █     │          │      ║                                       ║");
+            Console.WriteLine("║ │    █     │          │      ║                                           ║");
+            Console.WriteLine("║ │   ███    │          │      ║                                           ║");
+            Console.WriteLine("║ │   █ █    │          │      ║                                           ║");
         }
         else
         {
-            Console.WriteLine("║ │          │   █      │      ║                                       ║");
-            Console.WriteLine("║ │          │  ███     │      ║                                       ║");
-            Console.WriteLine("║ │          │  █ █     │      ║                                       ║");
+            Console.WriteLine("║ │          │     █    │      ║                                           ║");
+            Console.WriteLine("║ │          │    ███   │      ║                                           ║");
+            Console.WriteLine("║ │          │    █ █   │      ║                                           ║");
         }
 
         Console.WriteLine("║ │          │          │      ║                                           ║");
