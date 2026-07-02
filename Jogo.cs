@@ -8,8 +8,9 @@ class Jogo
     static int nivel;
     static int velocidade;
 
-    // 0 = esquerda | 1 = direita
     static int pistaJogador;
+    static int pistaInimigo;
+    static int linhaInimigo;
 
     static Random random = new Random();
 
@@ -21,9 +22,11 @@ class Jogo
         vidas = 3;
         pontos = 0;
         nivel = 1;
-        velocidade = 300;
+        velocidade = 80;
 
         pistaJogador = 0;
+        pistaInimigo = random.Next(2);
+        linhaInimigo = 0;
 
         bool jogando = true;
 
@@ -53,10 +56,54 @@ class Jogo
                 }
             }
 
-            Thread.Sleep(velocidade);
+            linhaInimigo++;
+
+            // colisão
+            if (linhaInimigo == 8 && pistaInimigo == pistaJogador)
+            {
+                vidas--;
+
+                if (vidas <= 0)
+                    jogando = false;
+
+                linhaInimigo = 0;
+                pistaInimigo = random.Next(2);
+            }
+
+            // passou sem bater
+            if (linhaInimigo > 9)
+            {
+                pontos += 10;
+                linhaInimigo = 0;
+                pistaInimigo = random.Next(2);
+            }
+
+            Thread.Sleep(80);
         }
 
         Console.CursorVisible = true;
+    }
+
+    static void DesenharCarroEsq()
+    {
+        Console.Write("   █   ");
+    }
+
+    static void DesenharCarroEsq2()
+    {
+        Console.Write("  ███  ");
+    }
+
+    static void DesenharCarroEsq3()
+    {
+        Console.Write("  █ █  ");
+    }
+
+    static void DesenharCarroDir(int tipo)
+    {
+        if (tipo == 1) Console.Write("   █   ");
+        else if (tipo == 2) Console.Write("  ███  ");
+        else Console.Write("  █ █  ");
     }
 
     static void DesenharTela()
@@ -71,28 +118,51 @@ class Jogo
         Console.WriteLine("║ │          │          │      ║ Nível  : " + nivel.ToString("00") + "                               ║");
         Console.WriteLine("║ │          │          │      ║ Vidas  : " + vidas + "                                ║");
         Console.WriteLine("║ │          │          │      ║ Veloc. : " + velocidade + " ms                           ║");
-        Console.WriteLine("║ │          │          │      ║                                           ║");
-        Console.WriteLine("║ │          │          │      ║ CONTROLES                                 ║");
-        Console.WriteLine("║ │          │          │      ║ A ou ← = Esquerda                         ║");
-        Console.WriteLine("║ │          │          │      ║ D ou → = Direita                          ║");
-        Console.WriteLine("║ │          │          │      ║ ESC = Sair                                ║");
 
-        if (pistaJogador == 0)
+        for (int i = 0; i < 10; i++)
         {
-            Console.WriteLine("║ │    █     │          │      ║                                           ║");
-            Console.WriteLine("║ │   ███    │          │      ║                                           ║");
-            Console.WriteLine("║ │   █ █    │          │      ║                                           ║");
-        }
-        else
-        {
-            Console.WriteLine("║ │          │    █     │      ║                                           ║");
-            Console.WriteLine("║ │          │   ███    │      ║                                           ║");
-            Console.WriteLine("║ │          │   █ █    │      ║                                           ║");
+            string esq = "       ";
+            string dir = "       ";
+
+            // inimigo
+            if (i == linhaInimigo)
+            {
+                if (pistaInimigo == 0)
+                    esq = "  ███  ";
+                else
+                    dir = "  ███  ";
+            }
+
+            // jogador (PERFEITO alinhado)
+            if (i == 7)
+            {
+                if (pistaJogador == 0)
+                    esq = "   █   ";
+                else
+                    dir = "   █   ";
+            }
+            else if (i == 8)
+            {
+                if (pistaJogador == 0)
+                    esq = "  ███  ";
+                else
+                    dir = "  ███  ";
+            }
+            else if (i == 9)
+            {
+                if (pistaJogador == 0)
+                    esq = "  █ █  ";
+                else
+                    dir = "  █ █  ";
+            }
+
+            Console.WriteLine("║ │" + esq + "│" + dir + "│         ║                                           ║");
         }
 
-        Console.WriteLine("║ │          │          │      ║                                           ║");
-        Console.WriteLine("║ │          │          │      ║                                           ║");
-        Console.WriteLine("║ └──────────┴──────────┘      ║                                           ║");
+        Console.WriteLine("║ └──────────┴──────────┘      ║ CONTROLES                                 ║");
+        Console.WriteLine("║                              ║ A ou ← = Esquerda                         ║");
+        Console.WriteLine("║                              ║ D ou → = Direita                          ║");
+        Console.WriteLine("║                              ║ ESC = Sair                                ║");
         Console.WriteLine("╚══════════════════════════════╩═══════════════════════════════════════════╝");
     }
 }
