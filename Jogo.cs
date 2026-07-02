@@ -156,7 +156,7 @@ class Jogo
                     dir = "  █ █  ";
             }
 
-            Console.WriteLine("║ │" + esq + "│" + dir + "│         ║                                           ║");
+            Console.WriteLine("║ │" + esq +  "   │ " + dir +  "  │        ║                                            ║");
         }
 
         Console.WriteLine("║ └──────────┴──────────┘      ║ CONTROLES                                 ║");
