@@ -8,13 +8,16 @@ class Jogo
     static int nivel;
     static int velocidade;
 
-    
+    // 0 = esquerda | 1 = direita
     static int pistaJogador;
 
     static Random random = new Random();
 
     public static void Iniciar()
     {
+        Console.OutputEncoding = System.Text.Encoding.UTF8;
+        Console.CursorVisible = false;
+
         vidas = 3;
         pontos = 0;
         nivel = 1;
@@ -50,33 +53,10 @@ class Jogo
                 }
             }
 
-                        while (jogando)
-{
-                        DesenharTela();
-
-                        if (Console.KeyAvailable)
-    {
-                     ConsoleKey tecla = Console.ReadKey(true).Key;
-
-                    switch (tecla)
-                       {
-                    case ConsoleKey.A:
-                    case ConsoleKey.LeftArrow:
-                    pistaJogador = 0;
-                    break;
-
-            case ConsoleKey.D:
-            case ConsoleKey.RightArrow:
-                pistaJogador = 1;
-                break;
-
-            case ConsoleKey.Escape:
-                jogando = false;
-                break;
+            Thread.Sleep(velocidade);
         }
-    }
-}
-        }
+
+        Console.CursorVisible = true;
     }
 
     static void DesenharTela()
@@ -105,9 +85,9 @@ class Jogo
         }
         else
         {
-            Console.WriteLine("║ │          │     █    │      ║                                           ║");
-            Console.WriteLine("║ │          │    ███   │      ║                                           ║");
-            Console.WriteLine("║ │          │    █ █   │      ║                                           ║");
+            Console.WriteLine("║ │          │    █     │      ║                                           ║");
+            Console.WriteLine("║ │          │   ███    │      ║                                           ║");
+            Console.WriteLine("║ │          │   █ █    │      ║                                           ║");
         }
 
         Console.WriteLine("║ │          │          │      ║                                           ║");
