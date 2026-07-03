@@ -26,7 +26,7 @@ class Jogo
 
         pistaJogador = 0;
         pistaInimigo = random.Next(2);
-        linhaInimigo = 0;
+        linhaInimigo = -2;
 
         bool jogando = true;
 
@@ -58,23 +58,23 @@ class Jogo
 
             linhaInimigo++;
 
-            // colisão
-            if (linhaInimigo == 8 && pistaInimigo == pistaJogador)
+            if (pistaInimigo == pistaJogador &&
+                linhaInimigo + 2 >= 7 &&
+                linhaInimigo <= 9)
             {
                 vidas--;
 
                 if (vidas <= 0)
                     jogando = false;
 
-                linhaInimigo = 0;
+                linhaInimigo = -2;
                 pistaInimigo = random.Next(2);
             }
 
-            // passou sem bater
             if (linhaInimigo > 9)
             {
-                pontos += 10;
-                linhaInimigo = 0;
+                pontos += 1;
+                linhaInimigo = -2;
                 pistaInimigo = random.Next(2);
             }
 
@@ -82,28 +82,6 @@ class Jogo
         }
 
         Console.CursorVisible = true;
-    }
-
-    static void DesenharCarroEsq()
-    {
-        Console.Write("   █   ");
-    }
-
-    static void DesenharCarroEsq2()
-    {
-        Console.Write("  ███  ");
-    }
-
-    static void DesenharCarroEsq3()
-    {
-        Console.Write("  █ █  ");
-    }
-
-    static void DesenharCarroDir(int tipo)
-    {
-        if (tipo == 1) Console.Write("   █   ");
-        else if (tipo == 2) Console.Write("  ███  ");
-        else Console.Write("  █ █  ");
     }
 
     static void DesenharTela()
@@ -114,49 +92,49 @@ class Jogo
         Console.WriteLine("║                           BRICK RACE                                     ║");
         Console.WriteLine("╠══════════════════════════════╦═══════════════════════════════════════════╣");
         Console.WriteLine("║ PISTA                        ║ PAINEL                                    ║");
-        Console.WriteLine("║ ┌──────────┬──────────┐      ║ Pontos : " + pontos.ToString("000000") + "                           ║");
+        Console.WriteLine("║ ┌──────────┬──────────┐      ║ Pontos : " + pontos.ToString("0000") + "                             ║");
         Console.WriteLine("║ │          │          │      ║ Nível  : " + nivel.ToString("00") + "                               ║");
         Console.WriteLine("║ │          │          │      ║ Vidas  : " + vidas + "                                ║");
-        Console.WriteLine("║ │          │          │      ║ Veloc. : " + velocidade + " ms                           ║");
+        Console.WriteLine("║ │          │          │      ║ Veloc. : " + velocidade + " ms                            ║");
 
         for (int i = 0; i < 10; i++)
         {
             string esq = "       ";
             string dir = "       ";
 
-            // inimigo
             if (i == linhaInimigo)
             {
-                if (pistaInimigo == 0)
-                    esq = "  ███  ";
-                else
-                    dir = "  ███  ";
+                if (pistaInimigo == 0) esq = "   █   ";
+                else dir = "   █   ";
+            }
+            else if (i == linhaInimigo + 1)
+            {
+                if (pistaInimigo == 0) esq = "  ███  ";
+                else dir = "  ███  ";
+            }
+            else if (i == linhaInimigo + 2)
+            {
+                if (pistaInimigo == 0) esq = "   █   ";
+                else dir = "   █   ";
             }
 
-            // jogador (PERFEITO alinhado)
             if (i == 7)
             {
-                if (pistaJogador == 0)
-                    esq = "   █   ";
-                else
-                    dir = "   █   ";
+                if (pistaJogador == 0) esq = "   █   ";
+                else dir = "   █   ";
             }
             else if (i == 8)
             {
-                if (pistaJogador == 0)
-                    esq = "  ███  ";
-                else
-                    dir = "  ███  ";
+                if (pistaJogador == 0) esq = "  ███  ";
+                else dir = "  ███  ";
             }
             else if (i == 9)
             {
-                if (pistaJogador == 0)
-                    esq = "  █ █  ";
-                else
-                    dir = "  █ █  ";
+                if (pistaJogador == 0) esq = "  █ █  ";
+                else dir = "  █ █  ";
             }
 
-            Console.WriteLine("║ │" + esq +  "   │ " + dir +  "  │        ║                                            ║");
+            Console.WriteLine("║ │" + esq + "   │ " + dir + "  │      ║                                           ║");
         }
 
         Console.WriteLine("║ └──────────┴──────────┘      ║ CONTROLES                                 ║");
