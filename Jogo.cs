@@ -22,7 +22,7 @@ class Jogo
         vidas = 3;
         pontos = 0;
         nivel = 1;
-        velocidade = 80;
+        velocidade = 250;
 
         pistaJogador = 0;
         pistaInimigo = random.Next(2);
@@ -31,58 +31,70 @@ class Jogo
         bool jogando = true;
 
         while (jogando)
+    {
+        DesenharTela();
+
+        if (Console.KeyAvailable)
         {
-            DesenharTela();
+            ConsoleKey tecla = Console.ReadKey(true).Key;
 
-            if (Console.KeyAvailable)
+            switch (tecla)
             {
-                ConsoleKey tecla = Console.ReadKey(true).Key;
+                case ConsoleKey.A:
+                case ConsoleKey.LeftArrow:
+                    pistaJogador = 0;
+                    break;
 
-                switch (tecla)
-                {
-                    case ConsoleKey.A:
-                    case ConsoleKey.LeftArrow:
-                        pistaJogador = 0;
-                        break;
+                case ConsoleKey.D:
+                case ConsoleKey.RightArrow:
+                    pistaJogador = 1;
+                    break;
 
-                    case ConsoleKey.D:
-                    case ConsoleKey.RightArrow:
-                        pistaJogador = 1;
-                        break;
-
-                    case ConsoleKey.Escape:
-                        jogando = false;
-                        break;
-                }
-            }
-
-            linhaInimigo++;
-
-            if (pistaInimigo == pistaJogador &&
-                linhaInimigo + 2 >= 7 &&
-                linhaInimigo <= 9)
-            {
-                vidas--;
-
-                if (vidas <= 0)
+                case ConsoleKey.Escape:
                     jogando = false;
-
-                linhaInimigo = -2;
-                pistaInimigo = random.Next(2);
+                    break;
             }
-
-            if (linhaInimigo > 9)
-            {
-                pontos += 1;
-                linhaInimigo = -2;
-                pistaInimigo = random.Next(2);
-            }
-
-            Thread.Sleep(80);
         }
 
-        Console.CursorVisible = true;
+        linhaInimigo++;
+
+        // colisão
+        if (linhaInimigo == 8 && pistaInimigo == pistaJogador)
+        {
+            vidas--;
+
+            if (vidas <= 0)
+                jogando = false;
+
+            linhaInimigo = 0;
+            pistaInimigo = random.Next(2);
+        }
+
+        // passou sem bater (PONTO FEITO!)
+        if (linhaInimigo > 9)
+        {
+            pontos += 10;
+
+            // 2. Aumenta a velocidade reduzindo o tempo de espera em 10ms
+            velocidade -= 15;
+
+            // Trava de segurança: impede que a velocidade fique menor que 50ms 
+            // (se chegar a 0 ou negativo, o jogo trava ou dá erro)
+            if (velocidade < 50) 
+            {
+                velocidade = 50; 
+            }
+
+            linhaInimigo = 0;
+            pistaInimigo = random.Next(2);
+        }
+
+        // 3. O jogo agora espera o tempo armazenado na variável 'velocidade'
+        Thread.Sleep(velocidade); 
     }
+
+    Console.CursorVisible = true;
+}
 
     static void DesenharTela()
     {
