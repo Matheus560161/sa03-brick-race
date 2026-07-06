@@ -58,6 +58,7 @@ class Jogo
 
             linhaInimigo++;
 
+            // colisão: jogador está nas linhas 10,11,12
             if (pistaInimigo == pistaJogador &&
                 linhaInimigo + 2 >= 10 &&
                 linhaInimigo <= 12)
@@ -71,6 +72,7 @@ class Jogo
                 pistaInimigo = random.Next(2);
             }
 
+            // passou sem bater
             if (linhaInimigo > 13)
             {
                 pontos += 1;
@@ -88,6 +90,8 @@ class Jogo
         }
 
         Console.CursorVisible = true;
+
+        DesenharGameOver();
     }
 
     static void DesenharTela()
@@ -154,5 +158,25 @@ class Jogo
         Console.WriteLine("║                              ║ D ou → = Direita                          ║");
         Console.WriteLine("║                              ║ ESC = Sair                                ║");
         Console.WriteLine("╚══════════════════════════════╩═══════════════════════════════════════════╝");
+    }
+
+
+    static void DesenharGameOver()
+    {
+        Console.Clear();
+
+        Console.WriteLine("╔══════════════════════════════════════════════════════════════════════════╗");
+        Console.WriteLine("║                                                                          ║");
+        Console.WriteLine("║                                GAME OVER                                 ║");
+        Console.WriteLine("║                                                                          ║");
+        Console.WriteLine("╠══════════════════════════════════════════════════════════════════════════╣");
+        Console.WriteLine("║                                                                          ║");
+        Console.WriteLine($"║                    PONTUACAO TOTAL : {pontos.ToString("0000")} PONTOS                       ║");
+        Console.WriteLine("║                                                                          ║");
+        Console.WriteLine("║                     Pressione qualquer tecla para sair...                ║");
+        Console.WriteLine("║                                                                          ║");
+        Console.WriteLine("╚══════════════════════════════════════════════════════════════════════════╝");
+
+        Console.ReadKey(true);
     }
 }
