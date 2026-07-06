@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Threading;
 
 class Jogo
@@ -13,6 +14,20 @@ class Jogo
     static int linhaInimigo;
 
     static Random random = new Random();
+
+    public static void LimparTela()
+    {
+        try
+        {
+            Console.Clear();
+        }
+        catch (IOException)
+        {
+            Console.SetCursorPosition(0, 0);
+            Console.Write(new string(' ', Console.WindowWidth * Console.WindowHeight));
+            Console.SetCursorPosition(0, 0);
+        }
+    }
 
     public static void Iniciar()
     {
@@ -101,12 +116,13 @@ class Jogo
 
     static void DesenharTela()
     {
-        Console.Clear();
+        LimparTela();
+        Console.SetCursorPosition(0, 0);
         Console.WriteLine("╔══════════════════════════════════════════════════════════════════════════╗");
         Console.WriteLine("║                           BRICK RACE                                     ║");
         Console.WriteLine("╠══════════════════════════════╦═══════════════════════════════════════════╣");
         Console.WriteLine("║ PISTA                        ║ PAINEL                                    ║");
-        Console.WriteLine("║ ┌──────────┬──────────┐      ║ Pontos : " + pontos.ToString("0000") + "                             ║");
+        Console.WriteLine("║ ┌──────────┬──────────┐      ║                                           ║");
 
         for (int i = 0; i < 14; i++)
         {
@@ -121,7 +137,7 @@ class Jogo
             else if (i == 2)
                 painel = "║ Vidas  : " + vidas + "                                ║";
             else if (i == 3)
-                painel = "║ Veloc. : " + velocidade + " ms                            ║";
+                painel = "║ Veloc. : " + velocidade + " ms                           ║";
 
             if (i == linhaInimigo)
             {
@@ -165,20 +181,30 @@ class Jogo
         Console.WriteLine("╚══════════════════════════════╩═══════════════════════════════════════════╝");
     }
 
-
     static void DesenharGameOver()
     {
-        Console.Clear();
+        LimparTela();
+        Console.SetCursorPosition(0, 0);
+
+        // Variável com a quantidade de obstáculos (no seu jogo, 1 ponto = 1 obstáculo desviado)
+        int obstaculosDesviados = pontos; 
 
         Console.WriteLine("╔══════════════════════════════════════════════════════════════════════════╗");
         Console.WriteLine("║                                                                          ║");
-        Console.WriteLine("║                                GAME OVER                                 ║");
+        Console.WriteLine("║                               FIM DE JOGO                                ║");
         Console.WriteLine("║                                                                          ║");
         Console.WriteLine("╠══════════════════════════════════════════════════════════════════════════╣");
         Console.WriteLine("║                                                                          ║");
-        Console.WriteLine($"║                    PONTUACAO TOTAL : {pontos.ToString("000")} PONTOS                         ║");
+        
+        // O segredo aqui é usar interpolação e formatação para manter os espaços fixos
+        Console.WriteLine($"║     Pontuacao final      : {pontos.ToString("000000")}                                        ║");
+        Console.WriteLine($"║     Nivel alcancado      : {nivel.ToString("00")}                                            ║");
+        Console.WriteLine($"║     Obstaculos desviados : {obstaculosDesviados.ToString("00")}                                            ║");
+        
         Console.WriteLine("║                                                                          ║");
-        Console.WriteLine("║                     Pressione qualquer tecla para sair...                ║");
+        Console.WriteLine("╠══════════════════════════════════════════════════════════════════════════╣");
+        Console.WriteLine("║                                                                          ║");
+        Console.WriteLine("║                  Pressione qualquer tecla para sair...                   ║");
         Console.WriteLine("║                                                                          ║");
         Console.WriteLine("╚══════════════════════════════════════════════════════════════════════════╝");
 
