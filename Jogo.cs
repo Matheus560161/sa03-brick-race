@@ -57,8 +57,6 @@ class Jogo
             }
 
             linhaInimigo++;
-
-            // colisão: jogador está nas linhas 10,11,12
             if (pistaInimigo == pistaJogador &&
                 linhaInimigo + 2 >= 10 &&
                 linhaInimigo <= 12)
@@ -72,7 +70,7 @@ class Jogo
                 pistaInimigo = random.Next(2);
             }
 
-            // passou sem bater
+          
             if (linhaInimigo > 13)
             {
                 pontos += 1;
@@ -80,14 +78,21 @@ class Jogo
                 pistaInimigo = random.Next(2);
             }
 
+           
             nivel = (pontos / 10) + 1;
-            velocidade = 120 - (nivel * 5);
 
+            
+            int passosDeVelocidade = pontos / 5; 
+            velocidade = 120 - (passosDeVelocidade * 10);
             if (velocidade < 40)
                 velocidade = 40;
 
             Thread.Sleep(velocidade);
         }
+
+        Menu.UltimaPontuacao = pontos;
+        Menu.UltimoNivel = nivel;
+        Menu.UltimosObstaculos = pontos;
 
         Console.CursorVisible = true;
 
