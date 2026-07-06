@@ -12,7 +12,7 @@ class Menu
 
         do
         {
-            Console.Clear();
+            Jogo.LimparTela();
 
             Console.WriteLine("╔════════════════════════════════════════════╗");
             Console.WriteLine("║             BRICK RACE - C#                ║");
@@ -61,7 +61,7 @@ class Menu
 
     static void MostrarInstrucoes()
     {
-        Console.Clear();
+        Jogo.LimparTela(); 
 
         Console.WriteLine("========== INSTRUÇÕES ==========\n");
 
@@ -86,7 +86,7 @@ class Menu
 
     static void MostrarUltimoResultado()
     {
-        Console.Clear();
+        Jogo.LimparTela();
 
         Console.WriteLine("======= ÚLTIMO RESULTADO =======\n");
 
