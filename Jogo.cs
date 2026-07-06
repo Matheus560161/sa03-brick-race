@@ -171,7 +171,7 @@ class Jogo
         Console.WriteLine("║                                                                          ║");
         Console.WriteLine("╠══════════════════════════════════════════════════════════════════════════╣");
         Console.WriteLine("║                                                                          ║");
-        Console.WriteLine($"║                    PONTUACAO TOTAL : {pontos.ToString("0000")} PONTOS                       ║");
+        Console.WriteLine($"║                    PONTUACAO TOTAL : {pontos.ToString("000")} PONTOS                         ║");
         Console.WriteLine("║                                                                          ║");
         Console.WriteLine("║                     Pressione qualquer tecla para sair...                ║");
         Console.WriteLine("║                                                                          ║");
