@@ -22,11 +22,11 @@ class Jogo
         vidas = 3;
         pontos = 0;
         nivel = 1;
-        velocidade = 80;
+        velocidade = 120;
 
         pistaJogador = 0;
         pistaInimigo = random.Next(2);
-        linhaInimigo = -2;
+        linhaInimigo = -3;
 
         bool jogando = true;
 
@@ -59,26 +59,32 @@ class Jogo
             linhaInimigo++;
 
             if (pistaInimigo == pistaJogador &&
-                linhaInimigo + 2 >= 7 &&
-                linhaInimigo <= 9)
+                linhaInimigo + 2 >= 10 &&
+                linhaInimigo <= 12)
             {
                 vidas--;
 
                 if (vidas <= 0)
                     jogando = false;
 
-                linhaInimigo = -2;
+                linhaInimigo = -3;
                 pistaInimigo = random.Next(2);
             }
 
-            if (linhaInimigo > 9)
+            if (linhaInimigo > 13)
             {
                 pontos += 1;
-                linhaInimigo = -2;
+                linhaInimigo = -3;
                 pistaInimigo = random.Next(2);
             }
 
-            Thread.Sleep(80);
+            nivel = (pontos / 10) + 1;
+            velocidade = 120 - (nivel * 5);
+
+            if (velocidade < 40)
+                velocidade = 40;
+
+            Thread.Sleep(velocidade);
         }
 
         Console.CursorVisible = true;
@@ -87,20 +93,26 @@ class Jogo
     static void DesenharTela()
     {
         Console.Clear();
-
         Console.WriteLine("╔══════════════════════════════════════════════════════════════════════════╗");
         Console.WriteLine("║                           BRICK RACE                                     ║");
         Console.WriteLine("╠══════════════════════════════╦═══════════════════════════════════════════╣");
         Console.WriteLine("║ PISTA                        ║ PAINEL                                    ║");
         Console.WriteLine("║ ┌──────────┬──────────┐      ║ Pontos : " + pontos.ToString("0000") + "                             ║");
-        Console.WriteLine("║ │          │          │      ║ Nível  : " + nivel.ToString("00") + "                               ║");
-        Console.WriteLine("║ │          │          │      ║ Vidas  : " + vidas + "                                ║");
-        Console.WriteLine("║ │          │          │      ║ Veloc. : " + velocidade + " ms                            ║");
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 14; i++)
         {
             string esq = "       ";
             string dir = "       ";
+            string painel = "║                                           ║";
+
+            if (i == 0)
+                painel = "║ Pontos : " + pontos.ToString("0000") + "                             ║";
+            else if (i == 1)
+                painel = "║ Nível  : " + nivel.ToString("00") + "                               ║";
+            else if (i == 2)
+                painel = "║ Vidas  : " + vidas + "                                ║";
+            else if (i == 3)
+                painel = "║ Veloc. : " + velocidade + " ms                            ║";
 
             if (i == linhaInimigo)
             {
@@ -118,23 +130,23 @@ class Jogo
                 else dir = "   █   ";
             }
 
-            if (i == 7)
+            if (i == 10)
             {
                 if (pistaJogador == 0) esq = "   █   ";
                 else dir = "   █   ";
             }
-            else if (i == 8)
+            else if (i == 11)
             {
                 if (pistaJogador == 0) esq = "  ███  ";
                 else dir = "  ███  ";
             }
-            else if (i == 9)
+            else if (i == 12)
             {
                 if (pistaJogador == 0) esq = "  █ █  ";
                 else dir = "  █ █  ";
             }
 
-            Console.WriteLine("║ │" + esq + "   │ " + dir + "  │      ║                                           ║");
+            Console.WriteLine("║ │" + esq + "   │ " + dir + "  │      " + painel);
         }
 
         Console.WriteLine("║ └──────────┴──────────┘      ║ CONTROLES                                 ║");
