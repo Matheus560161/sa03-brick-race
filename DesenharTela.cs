@@ -66,7 +66,7 @@ public partial class Jogo
             }
 
             Console.WriteLine("║ │" + esq + "   │ " + dir + "  │      " + painel);
-        }
+        }   
 
         Console.WriteLine("║ └──────────┴──────────┘      ║ CONTROLES                                 ║");
         Console.WriteLine("║                              ║ A ou ← = Esquerda                         ║");
