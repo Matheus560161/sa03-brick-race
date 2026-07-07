@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Threading;
 
-class Jogo
+partial class Jogo
 {
     static int vidas;
     static int pontos;
@@ -137,7 +137,7 @@ class Jogo
         DesenharGameOver();
     }
 
-    static void DesenharTela()
+    public static void DesenharTela2()
     {
         LimparTela();
         Console.SetCursorPosition(0, 0);
