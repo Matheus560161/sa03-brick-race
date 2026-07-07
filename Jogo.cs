@@ -136,7 +136,6 @@ partial class Jogo
 
         DesenharGameOver();
     }
-
     static void DesenharGameOver()
     {
         LimparTela();
