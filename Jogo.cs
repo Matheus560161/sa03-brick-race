@@ -160,7 +160,10 @@ class Jogo
             else if (i == 2)
                 painel = "║ Vidas  : " + vidas + "                                ║";
             else if (i == 3)
-                painel = "║ Veloc. : " + velocidade + " ms                           ║";
+            {
+                string velocidadeTexto = velocidade.ToString().PadLeft(3);
+                painel = "║ Veloc. : " + velocidadeTexto + " ms                           ║";
+            }
 
             for (int j = 0; j < 3; j++)
             {
