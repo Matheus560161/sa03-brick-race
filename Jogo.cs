@@ -9,9 +9,13 @@ class Jogo
     static int nivel;
     static int velocidade;
 
+    const int ALTURA_PISTA = 20;
+    const int LINHA_JOGADOR = ALTURA_PISTA - 3;
+    const int MIN_SEPARACAO_INIMIGOS = 8;
+
     static int pistaJogador;
-    static int pistaInimigo;
-    static int linhaInimigo;
+    static int[] pistasInimigos = new int[3];
+    static int[] linhasInimigos = new int[3];
 
     static Random random = new Random();
 
@@ -40,8 +44,11 @@ class Jogo
         velocidade = 120;
 
         pistaJogador = 0;
-        pistaInimigo = random.Next(2);
-        linhaInimigo = -3;
+        for (int i = 0; i < 3; i++)
+        {
+            pistasInimigos[i] = random.Next(2);
+            linhasInimigos[i] = -3 - (i * MIN_SEPARACAO_INIMIGOS);
+        }
 
         bool jogando = true;
 
@@ -71,26 +78,42 @@ class Jogo
                 }
             }
 
-            linhaInimigo++;
-            if (pistaInimigo == pistaJogador &&
-                linhaInimigo + 2 >= 10 &&
-                linhaInimigo <= 12)
+            for (int i = 0; i < 3; i++)
             {
-                vidas--;
+                linhasInimigos[i]++;
 
-                if (vidas <= 0)
-                    jogando = false;
+                if (pistasInimigos[i] == pistaJogador &&
+                    linhasInimigos[i] + 2 >= LINHA_JOGADOR &&
+                    linhasInimigos[i] <= LINHA_JOGADOR + 2)
+                {
+                    vidas--;
+                    if (vidas <= 0)
+                    {
+                        jogando = false;
+                        break;
+                    }
 
-                linhaInimigo = -3;
-                pistaInimigo = random.Next(2);
-            }
-
-          
-            if (linhaInimigo > 13)
-            {
-                pontos += 1;
-                linhaInimigo = -3;
-                pistaInimigo = random.Next(2);
+                    int menorLinha = int.MaxValue;
+                    for (int j = 0; j < 3; j++)
+                    {
+                        if (j == i) continue;
+                        menorLinha = Math.Min(menorLinha, linhasInimigos[j]);
+                    }
+                    linhasInimigos[i] = Math.Min(-3, menorLinha - MIN_SEPARACAO_INIMIGOS);
+                    pistasInimigos[i] = random.Next(2);
+                }
+                else if (linhasInimigos[i] > ALTURA_PISTA - 1)
+                {
+                    pontos += 1;
+                    int menorLinha = int.MaxValue;
+                    for (int j = 0; j < 3; j++)
+                    {
+                        if (j == i) continue;
+                        menorLinha = Math.Min(menorLinha, linhasInimigos[j]);
+                    }
+                    linhasInimigos[i] = Math.Min(-3, menorLinha - MIN_SEPARACAO_INIMIGOS);
+                    pistasInimigos[i] = random.Next(2);
+                }
             }
 
            
@@ -124,7 +147,7 @@ class Jogo
         Console.WriteLine("║ PISTA                        ║ PAINEL                                    ║");
         Console.WriteLine("║ ┌──────────┬──────────┐      ║                                           ║");
 
-        for (int i = 0; i < 14; i++)
+        for (int i = 0; i < ALTURA_PISTA; i++)
         {
             string esq = "       ";
             string dir = "       ";
@@ -139,33 +162,36 @@ class Jogo
             else if (i == 3)
                 painel = "║ Veloc. : " + velocidade + " ms                           ║";
 
-            if (i == linhaInimigo)
+            for (int j = 0; j < 3; j++)
             {
-                if (pistaInimigo == 0) esq = "   █   ";
-                else dir = "   █   ";
-            }
-            else if (i == linhaInimigo + 1)
-            {
-                if (pistaInimigo == 0) esq = "  ███  ";
-                else dir = "  ███  ";
-            }
-            else if (i == linhaInimigo + 2)
-            {
-                if (pistaInimigo == 0) esq = "   █   ";
-                else dir = "   █   ";
+                if (i == linhasInimigos[j])
+                {
+                    if (pistasInimigos[j] == 0) esq = "   █   ";
+                    else dir = "   █   ";
+                }
+                else if (i == linhasInimigos[j] + 1)
+                {
+                    if (pistasInimigos[j] == 0) esq = "  ███  ";
+                    else dir = "  ███  ";
+                }
+                else if (i == linhasInimigos[j] + 2)
+                {
+                    if (pistasInimigos[j] == 0) esq = "   █   ";
+                    else dir = "   █   ";
+                }
             }
 
-            if (i == 10)
+            if (i == LINHA_JOGADOR)
             {
                 if (pistaJogador == 0) esq = "   █   ";
                 else dir = "   █   ";
             }
-            else if (i == 11)
+            else if (i == LINHA_JOGADOR + 1)
             {
                 if (pistaJogador == 0) esq = "  ███  ";
                 else dir = "  ███  ";
             }
-            else if (i == 12)
+            else if (i == LINHA_JOGADOR + 2)
             {
                 if (pistaJogador == 0) esq = "  █ █  ";
                 else dir = "  █ █  ";
