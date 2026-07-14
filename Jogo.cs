@@ -116,14 +116,20 @@ partial class Jogo
                 }
             }
 
-           
             nivel = (pontos / 10) + 1;
 
-            
-            int passosDeVelocidade = pontos / 5; 
-            velocidade = 120 - (passosDeVelocidade * 10);
-            if (velocidade < 40)
-                velocidade = 40;
+            int passosDeVelocidade = pontos / 10;
+            if (passosDeVelocidade <= 8)
+            {
+                velocidade = 120 - (passosDeVelocidade * 10);
+            }
+            else
+            {
+                int passosExtras = passosDeVelocidade - 8;
+                velocidade = 40 - (passosExtras * 2);
+                if (velocidade < 10)
+                    velocidade = 10;
+            }
 
             Thread.Sleep(velocidade);
         }
