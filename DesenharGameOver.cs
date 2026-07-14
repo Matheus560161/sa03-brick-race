@@ -17,8 +17,8 @@ public partial class Jogo
         Console.WriteLine("║                                                                          ║");
 
         Console.WriteLine($"║     Pontuacao final      : {pontos.ToString("000000")}                                        ║");
-        Console.WriteLine($"║     Nivel alcancado      : {nivel.ToString("00")}                                            ║");
-        Console.WriteLine($"║     Obstaculos desviados : {obstaculosDesviados.ToString("00")}                                            ║");
+        Console.WriteLine($"║     Nivel alcancado      : {nivel.ToString("000")}                                           ║");
+        Console.WriteLine($"║     Obstaculos desviados : {obstaculosDesviados.ToString("000")}                                           ║");
 
         Console.WriteLine("║                                                                          ║");
         Console.WriteLine("╠══════════════════════════════════════════════════════════════════════════╣");
