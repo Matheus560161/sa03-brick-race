@@ -121,7 +121,7 @@ partial class Jogo
             int passosDeVelocidade = pontos / 10;
             if (passosDeVelocidade <= 8)
             {
-                velocidade = 120 - (passosDeVelocidade * 10);
+                velocidade = 120 - (passosDeVelocidade * 10);   
             }
             else
             {
