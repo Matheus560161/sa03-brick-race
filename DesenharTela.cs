@@ -22,8 +22,10 @@ public partial class Jogo
             else if (i == 1)
                 painel = "║ Nível  : " + nivel.ToString("00") + "                               ║";
             else if (i == 2)
-                painel = "║ Vidas  : " + vidas + "                                ║";
+                painel = "║ Vidas  : " + vidas.ToString() + "                                ║";
             else if (i == 3)
+                painel = "║ Recorde: " + Menu.UltimaPontuacao.ToString("0000") + "                             ║";
+            else if (i == 4)
             {
                 string velocidadeTexto = velocidade.ToString().PadLeft(3);
                 painel = "║ Veloc. : " + velocidadeTexto + " ms                           ║";
