@@ -17,6 +17,7 @@ class MostrarUltimoResultado
             Console.WriteLine($"Pontuação : {Menu.UltimaPontuacao}");
             Console.WriteLine($"Nível     : {Menu.UltimoNivel}");
             Console.WriteLine($"Desvios   : {Menu.UltimosObstaculos}");
+            Console.WriteLine($"Velocidade: {Menu.UltimaVelocidade}");
         }
 
         Console.WriteLine("\nPressione qualquer tecla...");

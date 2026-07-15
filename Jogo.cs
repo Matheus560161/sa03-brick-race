@@ -137,6 +137,7 @@ partial class Jogo
         Menu.UltimaPontuacao = pontos;
         Menu.UltimoNivel = nivel;
         Menu.UltimosObstaculos = pontos;
+        Menu.UltimaVelocidade = velocidade;
 
         Console.CursorVisible = true;
 

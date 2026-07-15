@@ -19,6 +19,7 @@ public partial class Jogo
         Console.WriteLine($"║     Pontuacao final      : {pontos.ToString("000000")}                                        ║");
         Console.WriteLine($"║     Nivel alcancado      : {nivel.ToString("000")}                                           ║");
         Console.WriteLine($"║     Obstaculos desviados : {obstaculosDesviados.ToString("000")}                                           ║");
+        Console.WriteLine($"║     Velocidade final     : {velocidade.ToString("000")}                                           ║");
 
         Console.WriteLine("║                                                                          ║");
         Console.WriteLine("╠══════════════════════════════════════════════════════════════════════════╣");
