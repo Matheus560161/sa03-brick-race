@@ -105,6 +105,12 @@ partial class Jogo
                 else if (linhasInimigos[i] > ALTURA_PISTA - 1)
                 {
                     pontos += 1;
+
+                    if (pontos > Menu.UltimaPontuacao)
+                    {
+                        Menu.UltimaPontuacao = pontos;
+                    }
+
                     int menorLinha = int.MaxValue;
                     for (int j = 0; j < 3; j++)
                     {
@@ -134,7 +140,11 @@ partial class Jogo
             Thread.Sleep(velocidade);
         }
 
-        Menu.UltimaPontuacao = pontos;
+        if (pontos > Menu.UltimaPontuacao)
+        {
+            Menu.UltimaPontuacao = pontos;
+        }
+
         Menu.UltimoNivel = nivel;
         Menu.UltimosObstaculos = pontos;
         Menu.UltimaVelocidade = velocidade;
